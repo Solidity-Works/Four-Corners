@@ -352,7 +352,15 @@ class App extends Component{
               let tokenContract=new ethers.Contract(this.token.value[0], erc20, provider);
               const balance = await tokenContract.balanceOf(this.address);
               let allowance = await tokenContract.allowance(this.address,addressList[this.chain].contract);
+              let fee="";
+              if(this.room.percentageFee==false){
+                fee="Deposit Fee = "+ethers.utils.formatUnits(this.room.fee.toString(),this.token.value[1])+" "+this.token.label+"\n";
+              }
+              else{
+                fee="Deposit Fee = "+this.room.fee.toString()+"%\n"
+              }
               this.info = "Add "+this.token.label+" and MOVE ALL STAKE to "+teamColors[teamNumber-1].border.toUpperCase()+"\n \n"+
+              fee+
               "Balance = "+ ethers.utils.formatUnits(balance.toString(),this.token.value[1])+ "\n"+
               "Contract Allowance = "+ethers.utils.formatUnits(allowance.toString(),this.token.value[1]).substring(0,10)+"...\n";
               document.getElementById("playBoxText").innerText=this.info;
