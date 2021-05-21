@@ -357,7 +357,7 @@ class App extends Component{
                 fee="Deposit Fee = "+ethers.utils.formatUnits(this.room.fee.toString(),this.token.value[1])+" "+this.token.label+"\n";
               }
               else{
-                fee="Deposit Fee = "+this.room.fee.toString()+"%\n"
+                fee="Deposit Fee = "+(parseInt(his.room.fee.toString())/10).toString()+"% / Amount\n"
               }
               this.info = "Add "+this.token.label+" and MOVE ALL STAKE to "+teamColors[teamNumber-1].border.toUpperCase()+"\n \n"+
               fee+
