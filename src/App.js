@@ -409,8 +409,16 @@ class App extends Component{
       let str;
       if(t.isLessThan(1)){
         if(this.room.init==true){
-          document.getElementById("pot").innerText="Round Finished\n"+"Round - "+this.room.currentRound.toString()+"\n Pot = "+
-          ethers.utils.formatUnits(this.totalPot.toString(),this.token.value[1]).substr(0,5);
+          const b = (await this.contract.losers(this.token.value[0],this.room.currentRound)).toString();
+          if(b=="0"){
+            document.getElementById("pot").innerText="Round Finished\n"+"Round - "+this.room.currentRound.toString()+"\n Pot = "+
+            ethers.utils.formatUnits(this.totalPot.toString(),this.token.value[1]).substr(0,5);
+          }
+          else{
+            document.getElementById("pot").innerText="Add to Start Round\n"+"Round - "+this.room.currentRound.toString()+"\n Pot = "+
+            ethers.utils.formatUnits(this.totalPot.toString(),this.token.value[1]).substr(0,5);
+          }
+
         }
         else{
           document.getElementById("pot").innerText="Token Room not initialized \n"+"Round - "+this.room.currentRound.toString()+"\n Pot = "+
