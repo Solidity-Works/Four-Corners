@@ -7,9 +7,6 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Select from 'react-select';
 
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 import BigNumber from 'bignumber.js';
 import {ethers,providers} from 'ethers';
@@ -78,7 +75,6 @@ class App extends Component{
     //contract interaction variables
     this.pot="...";
     this.room = null;
-    this.gridList=[{"Round ↕":0,"Amount ↕":0}];
     //functions
     this.connect=this.connect.bind(this);
     this.changeToken=this.changeToken.bind(this);
@@ -91,9 +87,10 @@ class App extends Component{
     this.loadTokens=this.loadTokens.bind(this);
     this.loser=this.loser.bind(this);
     this.withdraw=this.withdraw.bind(this);
-    this.rowSelected=this.rowSelected.bind(this);
+    this.sendWithdrawal=this.sendWithdrawal.bind(this);
   }
   async connect(){
+    this.closeModals();
     try{
       if(window.ethereum){
         await window.ethereum.enable();
@@ -180,7 +177,7 @@ class App extends Component{
       button.style.fontSize= (bg.clientWidth/57).toString()+"px";
       button = document.getElementById("pot");
       button.style.position="absolute";
-      button.style.top=Math.trunc(40+bg.clientHeight*(8/19)).toString()+"px";
+      button.style.top=Math.trunc(40+bg.clientHeight*(8/18)).toString()+"px";
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
       button.style.right = (window.innerWidth/2-button.clientWidth/2).toString()+"px";
       button = document.getElementById("withdraw");
@@ -457,8 +454,12 @@ class App extends Component{
       let box = document.getElementById("withdrawBox");
       box.style.zIndex="2";
       document.getElementById("xx").style.zIndex="2";
+      //box=document.getElementById("table");
+      box=document.querySelector("table tbody");
+      while(box.hasChildNodes()){
+         box.removeChild(box.firstChild);
+      }
       if(this.room!=null){
-        let x=[];
         //stakeHeads = user, token => uint24 round
         //userStake = user,token,round => Stake(uint256 amount, uint8 team, uint24 next, uint24 prev)
         //only add if round is not current round and user team is not losers
@@ -467,47 +468,53 @@ class App extends Component{
         let round = (await this.contract.stakeHeads(this.address,token)).toString();
         let stake = await this.contract.userStake(this.address,token,round);
         let loser=null;
-        if(round!=0){
-          while(stake!=null&&stake.amount!=0&&round!="0"){
+        if(round!="0"){
+          while(stake!=null&&stake.amount.toString()!="0"&&round!="0"){
             loser = (await this.contract.losers(token,round)).toString();
             if(loser!=stake.team.toString()){
               let totalPot = BigNumber("0");
               let winnerStake = BigNumber("0");
               for(let i=1;i<5;i++){
-                const add = await this.contract.pots(token,round,i).toString();
+                const add = (await this.contract.pots(token,round,i)).toString();
                 totalPot=totalPot.plus(add);
                 if(i.toString()!=loser){
                   winnerStake=winnerStake.plus(add);
                 }
               }
               let amount = (totalPot.multipliedBy(BigNumber(stake.amount.toString()).dividedBy(winnerStake))).toFixed(0).toString();
-              x.push({
-                "Round ↕":parseInt(round),
-                "Amount ↕":ethers.utils.formatUnits(amount,addressList[this.chain].tokens[token].value[1])
-              });
+              let d = document.getElementById("select").options[document.getElementById("select").selectedIndex].text;
+              d=addressList[this.chain].tokens[d].value[1];
+              amount = ethers.utils.formatUnits(amount,d);
+              let newRow = box.insertRow(-1);
+              newRow.style.border="2px solid purple";
+              const r = round;
+              newRow.onclick= ()=>{this.sendWithdrawal(r)};
+              let cell0 = newRow.insertCell(0);
+              let cell1 = newRow.insertCell(1);
+              cell0.innerHTML=round;
+              cell1.innerHTML=amount;
             }
             round = stake.next.toString();
             stake = await this.contract.userStake(this.address,token,round);
           }
         }
         else{
-          this.gridList=[{"Round ↕":"None","Amount ↕":"None"}];
+          //clear table and set to empty
         }
-        //this.gridList.splice(0,this.gridList.length);
-        this.gridList=x;
       }
       else{
-        this.gridList=[{"Round ↕":"None","Amount ↕":"None"}];
+        //clear table and set to empy
       }
     }
     catch(e){}
   }
-  async rowSelected(row){
+  async sendWithdrawal(round){
     const token = this.token.value[0];
-    const round = row.data["Round ↕"].toString();
+    //console.log(round);
     try{
       if(round!="0"){
         await this.contract.withdraw(token,round,{gasPrice: 10000000000, gasLimit: 100000});
+        this.closeModals();
       }
     }
     catch(e){}
@@ -628,28 +635,19 @@ class App extends Component{
         </div>
         <div id="withdrawBox" style={{position:"absolute",top:"25%",left:"25%",
         width:"50vw",height:"70vh",borderRadius:"25px",
-        backgroundColor:"#66ff66",border:"5px double purple",color:"black",zIndex:"-1"}}>
-          Winnings
+        backgroundColor:"green",border:"5px double purple",color:"yellow",zIndex:"-1"}}>
+          Withdraw Winnings
           <Button id="xx" zIndex="-1"as="input"type ="Button"value={"×"}onClick={()=>this.closeModals()}
             style={{backgroundColor:"Transparent",color:"black",position:"absolute",overflowY:"auto",
             top:"0",right:"0",borderColor:"Transparent",
             fontWeight:"Bold"}}/>
-          <AgGridReact
-            id="grid"
-            rowData={this.gridList}
-            suppressDragLeaveHidesColumns={true}
-            enableCellTextSelection={true}
-            ensureDomOrder={true}
-            cellStyle={{color: 'red'}}
-            rowHeight={"30px"}
-            rowSelection={"single"}
-            wrapText={true}
-            onRowClicked={(e)=>{
-              this.rowSelected(e);
-            }}>
-              <AgGridColumn field="Round ↕"sortable={true}minWidth={"50"}></AgGridColumn>
-              <AgGridColumn field="Amount ↕"sortable={true}minWidth={"100"}></AgGridColumn>
-          </AgGridReact>
+          <table id = "table" style={{width:"100%",position:"absolute"}}>
+            <tr>
+              <th>Round #</th>
+              <th>Amount $</th>
+            </tr>
+            <tbody/>
+          </table>
         </div>
       </div>
     )
