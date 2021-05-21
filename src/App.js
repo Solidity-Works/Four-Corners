@@ -26,8 +26,6 @@ import Background from './FourCornersStandoffV2.png';
   Big Bo / j301k / Solidity Works
 
 */
-const testContract = "0x7037511c408f6EaA8de587375644BD179E715600";
-const mainContract = null;
 const abi = [{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"address","name":"user","type":"address"},{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"bool","name":"bigAdmin","type":"bool"}],"name":"changeAdmins","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"address","name":"bank","type":"address"}],"name":"changeBank","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"changeBigAdmins","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"bank","type":"address"}],"name":"changeBigBank","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"fee","type":"uint256"}],"name":"changeBigFees","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"fee","type":"uint256"},{"internalType":"bool","name":"percentageFee","type":"bool"}],"name":"changeFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"length","type":"uint256"}],"name":"changeRoundLength","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"init","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint8","name":"team","type":"uint8"}],"name":"play","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"randomLoser","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"stopStart","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint24","name":"round","type":"uint24"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"admins","outputs":[{"internalType":"bool","name":"approved","type":"bool"},{"internalType":"bool","name":"bigAdmin","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"bigAdmins","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"bigBank","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"bigFees","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes","name":"b","type":"bytes"}],"name":"bytesToUint","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint24","name":"","type":"uint24"}],"name":"losers","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint24","name":"","type":"uint24"},{"internalType":"uint8","name":"","type":"uint8"}],"name":"pots","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"rooms","outputs":[{"internalType":"bool","name":"init","type":"bool"},{"internalType":"bool","name":"paused","type":"bool"},{"internalType":"bool","name":"locked","type":"bool"},{"internalType":"uint256","name":"roundLength","type":"uint256"},{"internalType":"uint256","name":"roundEnd","type":"uint256"},{"internalType":"uint256","name":"fee","type":"uint256"},{"internalType":"bool","name":"percentageFee","type":"bool"},{"internalType":"address","name":"bank","type":"address"},{"internalType":"uint24","name":"currentRound","type":"uint24"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"stakeHeads","outputs":[{"internalType":"uint24","name":"","type":"uint24"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"},{"internalType":"uint24","name":"","type":"uint24"}],"name":"userStake","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint8","name":"team","type":"uint8"},{"internalType":"uint24","name":"next","type":"uint24"},{"internalType":"uint24","name":"prev","type":"uint24"}],"stateMutability":"view","type":"function"}];
 //value[0]= Testnet token
 const erc20 = [{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
@@ -35,7 +33,7 @@ const erc20 = [{"constant":false,"inputs":[{"name":"_spender","type":"address"},
 const addressList={
   //bsc testnet
   "0x61":{
-    contract:"0x7037511c408f6EaA8de587375644BD179E715600",
+    contract:"0x522ee4473556146bCf1C0c53983022F6DEEb3810",
     tokens:{
       "BUSD":{ label: 'BUSD', value: ['0x8301f2213c0eed49a7e28ae4c3e91722919b8b47',18] },
       "WBNB":{ label: 'WBNB', value: ['0xae13d989dac2f0debff460ac112a837c89baa7cd',18] }
@@ -194,23 +192,6 @@ class App extends Component{
       button.style.right = (window.innerWidth/2).toString()+"px";
       button.style.top=Math.trunc(40+bg.clientHeight*(6/21)).toString()+"px";
       button.style.width=document.getElementById("withdraw").clientWidth.toString()+"px";
-      if(this.room!=null){
-        const t = new BigNumber(this.room.roundEnd.toString()).minus(Math.trunc(Date.now()/1000));
-        if(t<1&&this.room.init!=true){
-          let token = document.getElementById("select").options[document.getElementById("select").selectedIndex].text;
-          token = addressList[this.chain].tokens[token].value[0];
-          const x = await this.contract.losers(token,this.room.currentRound);
-          if(!BigNumber(x.toString()).isZero()){
-            button.style.backgroundColor="purple";
-          }
-        }
-        else{
-          button.style.backgroundColor="gray";
-        }
-      }
-      else{
-        button.style.backgroundColor="gray";
-      }
       button = document.getElementById("redWins");
       button.style.top=(40+bg.clientHeight*(1/20)).toString()+"px";
       button.style.right = (window.innerWidth/2+bg.clientWidth/10).toString()+"px";
@@ -348,10 +329,14 @@ class App extends Component{
       return;
     }
     try{
-      if(this.chain&&this.chain=='Mainnet'||this.chain=='Testnet'){
+      if(this.chain&& this.chain in addressList){
         if(this.room.init){
-        const t = new BigNumber(this.room.roundEnd.toString()).minus(Math.trunc(Date.now()/1000));
-        if(t<1){window.alert("Round not Active"); return;}
+          const t = new BigNumber(this.room.roundEnd.toString()).minus(Math.trunc(Date.now()/1000));
+          let x = await this.contract.losers(this.token.value[0],this.room.currentRound);
+          x=x.toString();
+          if(t.isLessThan(1)&&x=="0"){
+            window.alert("Round not Active"); return;
+          }
           if(!this.room.paused){
             if(!this.room.locked){
               this.team=teamNumber;
@@ -372,7 +357,7 @@ class App extends Component{
               let allowance = await tokenContract.allowance(this.address,addressList[this.chain].contract);
               this.info = "Add "+this.token.label+" and MOVE ALL STAKE to "+teamColors[teamNumber-1].border.toUpperCase()+"\n \n"+
               "Balance = "+ ethers.utils.formatUnits(balance.toString(),this.token.value[1])+ "\n"+
-              "Contract Allowance = "+ethers.utils.formatUnits(allowance.toString(),this.token.value[1])+"\n";
+              "Contract Allowance = "+ethers.utils.formatUnits(allowance.toString(),this.token.value[1]).substring(0,10)+"...\n";
               document.getElementById("playBoxText").innerText=this.info;
             }
             else window.alert("Token Room Locked");
@@ -387,9 +372,14 @@ class App extends Component{
   }
   async approveToken(){
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    let tokenContract=new ethers.Contract(this.token.value[0], erc20, provider);
+    let tokenContract=new ethers.Contract(this.token.value[0], erc20, provider.getSigner());
     if(this.chain in addressList){
-      await tokenContract.approve(addressList[this.chain].contract,"115792089237316195423570985008687907853269984665640564039457584007913129639934");
+      try{
+        await tokenContract.approve(addressList[this.chain].contract,"115792089237316195423570985008687907853269984665640564039457584007913129639934");
+        setTimeout(() => {  this.loadRoom() }, 10000);
+        this.closeModals();
+      }
+      catch(e){}
     }
   }
   async sendPlay(team){
@@ -399,10 +389,10 @@ class App extends Component{
         if(amount.indexOf(".")==-1||amount.substring(amount.indexOf("")+1).length<=this.token.value[1]){
           amount=new BigNumber(10).exponentiatedBy(this.token.value[1]).multipliedBy(amount).toString();
           this.team=team.toString();
-          await this.contract.play(this.token.value[0],amount,team,{gasPrice: 10000000000, gasLimit: 250000});
-          setTimeout(() => {  this.handleResize() }, 10000);
-          this.loadRoom();
+          await this.contract.play(this.token.value[0],amount,team,{gasPrice: 10000000000, gasLimit: 321000});
+          setTimeout(() => {  this.loadRoom() }, 10000);
           this.closeModals();
+
         }
         else{
           window.alert("Invalid amount. Max decimals = "+this.token.value[1].toString());
@@ -444,8 +434,12 @@ class App extends Component{
   }
   async loser(){
     try{
-      if(this.room!=null&&this.contract!=null){
-        await this.contract.randomLoser(this.token.value[0],{gasPrice: 10000000000, gasLimit: 100000});
+      if(this.room!=null&&this.contract!=null&&this.token!=null&&this.room.init==true){
+        let b = (await this.contract.losers(this.token.value[0],this.room.currentRound)).toString();
+        if(b=="0"){
+          await this.contract.randomLoser(this.token.value[0],{gasPrice: 10000000000, gasLimit: 100000});
+          setTimeout(() => {  this.loadRoom() }, 10000);
+        }
       }
     }
     catch(e){}
@@ -504,7 +498,9 @@ class App extends Component{
     const token = this.token.value[0];
     const round = row.data["Round ↕"].toString();
     try{
-      await this.contract.withdraw(token,round,{gasPrice: 10000000000, gasLimit: 100000});
+      if(round!="0"){
+        await this.contract.withdraw(token,round,{gasPrice: 10000000000, gasLimit: 100000});
+      }
     }
     catch(e){}
   }
@@ -587,10 +583,10 @@ class App extends Component{
           {this.pot}
         </span>
         <Button id="loser" zIndex="1"as="input"type ="Button"value={"Reveal \nLoser"}onClick={()=>this.loser()}
-            style={{color:"yellow",backgroundColor:"gray",position:"absolute",top:"10%",right:"50%",borderColor:"yellow",
+            style={{color:"yellow",backgroundColor:"#9049d6",position:"absolute",top:"10%",right:"50%",borderColor:"yellow",
             fontWeight:"Bold"}}/>
         <Button id="withdraw" zIndex="1"as="input"type ="Button"value={"Withdraw \nWinnings"}onClick={()=>this.withdraw()}
-            style={{color:"yellow",backgroundColor:"#9049d6",position:"absolute",top:"10%",right:"50%",borderColor:"yellow",
+            style={{color:"yellow",backgroundColor:"green",position:"absolute",top:"10%",right:"50%",borderColor:"yellow",
             fontWeight:"Bold"}}/>
         <span id="redWins" style={{color:"yellow",fontWeight:"bold",position:"absolute",top:"10%",right:"50%"}}>
           {this.redWins}
@@ -624,7 +620,7 @@ class App extends Component{
         </div>
         <div id="withdrawBox" style={{position:"absolute",top:"25%",left:"25%",
         width:"50vw",height:"70vh",borderRadius:"25px",
-        backgroundColor:"#9049d6",border:"5px double purple",color:"black",zIndex:"-1"}}>
+        backgroundColor:"#66ff66",border:"5px double purple",color:"black",zIndex:"-1"}}>
           Winnings
           <Button id="xx" zIndex="-1"as="input"type ="Button"value={"×"}onClick={()=>this.closeModals()}
             style={{backgroundColor:"Transparent",color:"black",position:"absolute",overflowY:"auto",
