@@ -146,7 +146,7 @@ class App extends Component{
         });
         this.hooked=true;
       }
-      document.getElementById("dropdown-basic-button").innerText=this.address.substr(0,6)+"..."+this.address.substr(-4);
+      document.getElementById("dropdown-basic-button").innerText=this.address.substr(0,5)+"..."+this.address.substr(-3);
     }
     catch(e){}
     this.loadTokens();
@@ -182,11 +182,11 @@ class App extends Component{
       button.style.right = (window.innerWidth/2-button.clientWidth/2).toString()+"px";
       button = document.getElementById("withdraw");
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
-      button.style.left = (window.innerWidth/2).toString()+"px";
+      button.style.left = (5+window.innerWidth/2).toString()+"px";
       button.style.top=Math.trunc(40+bg.clientHeight*(6/21)).toString()+"px";
       button = document.getElementById("loser");
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
-      button.style.right = (window.innerWidth/2).toString()+"px";
+      button.style.right = (5+window.innerWidth/2).toString()+"px";
       button.style.top=Math.trunc(40+bg.clientHeight*(6/21)).toString()+"px";
       button.style.width=document.getElementById("withdraw").clientWidth.toString()+"px";
       button = document.getElementById("redWins");
@@ -556,36 +556,21 @@ class App extends Component{
     document.title="Four Corners";
     return(
       <div id="bigbox"style={{height:"100vh",textAlign: 'center',justify:"center",justifyContent:"center",alignItems: 'center',backgroundColor:"#40206e"}}>{/*all elements must be contained in 1 div*/}
-        <Navbar id="nav" sticky="top" style={{backgroundColor:"#40206e",top:"0",maxHeight:"50px",whiteSpace:"nowrap",width:"auto"}}>
+        <Navbar id="nav" sticky="top" style={{backgroundColor:"#40206e",top:"0",height:"50px",whiteSpace:"nowrap",width:"50px",marginRight:"0px"}}>
           {/*<Navbar.Brand href="./">*/}
           <Navbar.Brand>
             <div id="logo" style={{top:"55"}}>
               <img src = {Logo} alt="Logo" style={{width:"40px", height:"40px",marginRight:"10px"}}/>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#40ff19"}}>F</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#03a1fc"}}>o</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#e61c4e"}}>u</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"yellow"}}>{"r "}</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#40ff19"}}>{" C"}</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#03a1fc"}}>o</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#e61c4e"}}>r</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"yellow"}}>n</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#40ff19"}}>e</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#03a1fc"}}>r</span>
-              <span style={{textDecoration:"underline",fontSize:"27px",color:"#e61c4e"}}>s</span>
             </div>
           </Navbar.Brand>
           <Navbar.Collapse style={{justifyContent:"left"}}>
-            <DropdownButton id="dropdown-basic-button" title={this.getAddress(this.address)} style={{marginRight:"90px",width:"auto",maxWidth:"10%",fontWeight:"bold",cursor:"pointer",color:"#3471eb"}}>
+            <DropdownButton id="dropdown-basic-button" title={this.getAddress(this.address)} style={{position:"absolute",left:"60px",width:"auto",maxWidth:"10%",fontWeight:"bold",cursor:"pointer",color:"#3471eb"}}>
               <Dropdown.Item onSelect={this.connect} id="browserConnect" as="button" style={{color:"blue"}}>Browser Wallet</Dropdown.Item>
-              {/*<br></br>
-              <Button as="input"type ="Button"value="Wallet Connect"onClick={this.wallet_connect}style={{width:"160px",height:"50px"}}/>*/}
             </DropdownButton>
-          </Navbar.Collapse>
-          <span style = {{width:"100px",position:"absolute",left:"375px"}}>
-            <select id="select" onChange={()=>this.changeToken()} style={{fontSize:"20px",width:"100px",height:"33px"}}>
+            <select id="select" onChange={()=>this.changeToken()} style={{position:"absolute",left:"180px",fontSize:"20px",width:"100px",height:"33px"}}>
               <option value="" disabled selected hidden>Token</option>
             </select>
-          </span>
+          </Navbar.Collapse>
         </Navbar>
         <span id="main" style={{alignItems:"center",top:"55",whiteSpace:"nowrap",position:"relative",height:"auto",width:"auto"}}>
           <img id="bgImg" overflow="visible"src = {Background} alt="Background" style={{minHeight:"61w",maxHeight:"88vh",maxWidth:"95vw",minWidth:"300px",padding:"0px"}}/>
