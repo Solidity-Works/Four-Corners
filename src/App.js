@@ -198,11 +198,11 @@ class App extends Component{
       button.style.right = (window.innerWidth/2-bg.clientWidth/9-button.clientWidth).toString()+"px";
       button.innerText=this.blueWins;
       button = document.getElementById("goldWins");
-      button.style.top=(40+bg.clientHeight*(19/20)).toString()+"px";
+      button.style.top=(40+bg.clientHeight*(17/18)).toString()+"px";
       button.style.right = (window.innerWidth/2+bg.clientWidth/10).toString()+"px";
       button.innerText=this.goldWins;
       button = document.getElementById("greenWins");
-      button.style.top=(40+bg.clientHeight*(19/20)).toString()+"px";
+      button.style.top=(40+bg.clientHeight*(17/18)).toString()+"px";
       button.style.right = (window.innerWidth/2-bg.clientWidth/9-button.clientWidth).toString()+"px";
       button.innerText=this.greenWins;
       button = document.getElementById("playBox");
