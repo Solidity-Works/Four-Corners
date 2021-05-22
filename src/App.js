@@ -556,7 +556,7 @@ class App extends Component{
     document.title="Four Corners";
     return(
       <div id="bigbox"style={{height:"100vh",textAlign: 'center',justify:"center",justifyContent:"center",alignItems: 'center',backgroundColor:"#40206e"}}>{/*all elements must be contained in 1 div*/}
-        <Navbar id="nav" sticky="top" style={{backgroundColor:"#40206e",top:"0",height:"50px",whiteSpace:"nowrap",width:"50px",marginRight:"0px"}}>
+        <Navbar id="nav" style={{backgroundColor:"#40206e",top:"0",height:"50px",whiteSpace:"nowrap",width:"50px",marginRight:"0px"}}>
           {/*<Navbar.Brand href="./">*/}
           <Navbar.Brand>
             <div id="logo" style={{top:"55"}}>
