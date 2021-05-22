@@ -182,12 +182,12 @@ class App extends Component{
       button.style.right = (window.innerWidth/2-button.clientWidth/2).toString()+"px";
       button = document.getElementById("withdraw");
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
-      button.style.left = (5+window.innerWidth/2).toString()+"px";
-      button.style.top=Math.trunc(40+bg.clientHeight*(6/21)).toString()+"px";
+      button.style.left = (window.innerWidth/2+bg.clientWidth/7).toString()+"px";
+      button.style.top=Math.trunc(40+bg.clientHeight*(9/20)).toString()+"px";
       button = document.getElementById("loser");
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
-      button.style.right = (5+window.innerWidth/2).toString()+"px";
-      button.style.top=Math.trunc(40+bg.clientHeight*(6/21)).toString()+"px";
+      button.style.right = (window.innerWidth/2+bg.clientWidth/7).toString()+"px";
+      button.style.top=Math.trunc(40+bg.clientHeight*(9/20)).toString()+"px";
       button.style.width=document.getElementById("withdraw").clientWidth.toString()+"px";
       button = document.getElementById("redWins");
       button.style.top=(40+bg.clientHeight*(1/20)).toString()+"px";
