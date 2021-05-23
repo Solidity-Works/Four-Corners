@@ -182,7 +182,7 @@ class App extends Component{
       button.style.right = (window.innerWidth/2-button.clientWidth/2).toString()+"px";
       button = document.getElementById("withdraw");
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
-      button.style.left = (window.innerWidth/2+bg.clientWidth/7).toString()+"px";
+      button.style.right = (window.innerWidth/2-bg.clientWidth/7-button.clientWidth).toString()+"px";
       button.style.top=Math.trunc(40+bg.clientHeight*(9/20)).toString()+"px";
       button = document.getElementById("loser");
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
@@ -593,8 +593,8 @@ class App extends Component{
         <Button id="loser" zIndex="1"as="input"type ="Button"value={"Reveal \nLoser"}onClick={()=>this.loser()}
             style={{color:"yellow",backgroundColor:"#9049d6",position:"absolute",top:"10%",right:"50%",borderColor:"yellow",
             fontWeight:"Bold"}}/>
-        <Button id="withdraw" zIndex="1"as="input"type ="Button"value={"Withdraw \nWinnings"}onClick={()=>this.withdraw()}
-            style={{color:"yellow",backgroundColor:"green",position:"absolute",top:"10%",right:"50%",borderColor:"yellow",
+        <Button id="withdraw" as="input"type ="Button"value={"Withdraw \nWinnings"}onClick={()=>this.withdraw()}
+            style={{color:"yellow",backgroundColor:"green",position:"absolute",top:"5%",right:"50%",borderColor:"yellow",
             fontWeight:"Bold"}}/>
         <span id="redWins" style={{color:"yellow",fontWeight:"bold",position:"absolute",top:"10%",right:"50%"}}>
           {this.redWins}
