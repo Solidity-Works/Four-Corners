@@ -568,7 +568,7 @@ class App extends Component{
             <DropdownButton id="dropdown-basic-button" title={this.getAddress(this.address)} style={{position:"absolute",left:"60px",width:"auto",maxWidth:"10%",fontWeight:"bold",cursor:"pointer",color:"#3471eb"}}>
               <Dropdown.Item onSelect={this.connect} id="browserConnect" as="button" style={{color:"blue"}}>Browser Wallet</Dropdown.Item>
             </DropdownButton>
-            <select id="select" onChange={()=>this.changeToken()} style={{position:"absolute",left:"180px",fontSize:"20px",width:"100px",height:"33px"}}>
+            <select id="select" onChange={()=>this.changeToken()} style={{position:"absolute",left:"200px",fontSize:"20px",width:"100px",height:"33px"}}>
               <option value="" disabled selected hidden>Token</option>
             </select>
           </Navbar.Collapse>
