@@ -175,15 +175,16 @@ class App extends Component{
       button.style.right = (window.innerWidth/2+xdelta).toString()+"px";
       button.style.top = (6.2*ydelta+60).toString()+"px";
       button.style.fontSize= (bg.clientWidth/57).toString()+"px";
+      button = document.getElementById("withdraw");
+      button.style.fontSize=(bg.clientHeight/30).toString()+"px";
+      button.style.right = (window.innerWidth/2-bg.clientWidth/7-button.clientWidth).toString()+"px";
+      button.style.top=Math.trunc(40+bg.clientHeight*(9/20)).toString()+"px";
+      button.style.zIndex="1";
       button = document.getElementById("pot");
       button.style.position="absolute";
       button.style.top=Math.trunc(40+bg.clientHeight*(8/18)).toString()+"px";
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
       button.style.right = (window.innerWidth/2-button.clientWidth/2).toString()+"px";
-      button = document.getElementById("withdraw");
-      button.style.fontSize=(bg.clientHeight/30).toString()+"px";
-      button.style.right = (window.innerWidth/2-bg.clientWidth/7-button.clientWidth).toString()+"px";
-      button.style.top=Math.trunc(40+bg.clientHeight*(9/20)).toString()+"px";
       button = document.getElementById("loser");
       button.style.fontSize=(bg.clientHeight/30).toString()+"px";
       button.style.right = (window.innerWidth/2+bg.clientWidth/7).toString()+"px";
@@ -538,7 +539,7 @@ class App extends Component{
   }
   componentDidMount(){
     //center widget update
-    setTimeout(() => {  this.handleResize() }, 600);
+    setTimeout(() => {  this.handleResize() }, 1);
     window.addEventListener("resize",()=>{ if(document.getElementById("bgImg").clientHeight>this.height+9||document.getElementById("bgImg").clientHeight<this.height+9||
     document.getElementById("bgImg").clientWidth>this.width+9||document.getElementById("bgImg").clientWidth<this.width+9) {this.handleResize();} });
     this.intervalID=setInterval(this.autoUpdate, 5000);
