@@ -67,7 +67,6 @@ class App extends Component{
     this.redWins=this.blueWins=this.goldWins=this.greenWins="0/100";
     this.width=0;
     this.height=0;
-    this.resizing=false;
     this.info="Add Stake";
     this.team=null;
     this.totalPot="0";
@@ -154,7 +153,6 @@ class App extends Component{
     this.handleResize();
   }
   async handleResize(){
-    this.resizing=true;
     const bg = document.getElementById("bgImg");
     try{
       let button = document.getElementById("blue");
@@ -220,7 +218,6 @@ class App extends Component{
     catch(e){}
     this.width=bg.clientWidth;
     this.height=bg.clientHeight;
-    this.resizing=false;
   }
   loadTokens(){
     let select = document.getElementById("select");
@@ -360,11 +357,33 @@ class App extends Component{
               else{
                 fee="Deposit Fee = "+(parseInt(this.room.fee.toString())/10).toString()+"% / Amount\n"
               }
-              this.info = "Add "+this.token.label+" and MOVE ALL STAKE to "+teamColors[teamNumber-1].border.toUpperCase()+"\n \n"+
+              this.info = "Add "+this.token.label+" and MOVE ALL STAKE to "+teamColors[teamNumber-1].border.toUpperCase()+"\n"+
               fee+
               "Balance = "+ ethers.utils.formatUnits(balance.toString(),this.token.value[1])+ "\n"+
-              "Contract Allowance = "+ethers.utils.formatUnits(allowance.toString(),this.token.value[1]).substring(0,10)+"...\n";
-              document.getElementById("playBoxText").innerText=this.info;
+              "Contract Allowance = "+ethers.utils.formatUnits(allowance.toString(),this.token.value[1]).substring(0,12)+"...\n";
+              box = document.getElementById("playBox");
+              let button = document.getElementById("playBoxText");
+              button.innerHTML= '<pre><font size="'+Math.floor(box.clientHeight/80).toString()+'"px">' +this.info+'</font><pre>';
+
+              button = document.getElementById("add");
+              button.style.fontSize=Math.trunc(box.clientHeight/18).toString()+"px";
+              button.style.height=Math.trunc(box.clientHeight/7).toString()+"px";
+              button.style.width=Math.trunc(box.clientWidth/3).toString()+"px";
+              button.style.position="absolute";
+              button.style.bottom=Math.trunc(button.clientHeight*2).toString()+"px";
+              button.style.left=(box.clientWidth/2).toString()+"px";
+              button = document.getElementById("approve");
+              button.style.fontSize=Math.trunc(box.clientHeight/18).toString()+"px";
+              button.style.height=Math.trunc(box.clientHeight/7).toString()+"px";
+              button.style.width=Math.trunc(box.clientWidth/3).toString()+"px";
+              button.style.position="absolute";
+              button.style.bottom=Math.trunc(button.clientHeight*2).toString()+"px";
+              button.style.right=(box.clientWidth/2).toString()+"px";
+              button = document.getElementById("playAmount");
+              button.style.position="absolute";
+              button.style.height=Math.trunc(box.clientHeight/8).toString()+"px";
+              button.style.bottom=((document.getElementById("add").clientHeight-button.clientHeight)*2).toString()+"px";
+              button.style.left=Math.trunc(box.clientWidth*0.3).toString()+"px";
             }
             else window.alert("Token Room Locked");
           }
@@ -417,7 +436,7 @@ class App extends Component{
         if(this.room.init==true){
           const b = (await this.contract.losers(this.token.value[0],this.room.currentRound)).toString();
           if(b=="0"){
-            document.getElementById("pot").innerText="Round Finished\n"+"Round - "+this.room.currentRound.toString()+"\n Pot = "+
+            document.getElementById("pot").innerText="Loser not Picked\n"+"Round - "+this.room.currentRound.toString()+"\n Pot = "+
             ethers.utils.formatUnits(this.totalPot.toString(),this.token.value[1]).substr(0,5);
           }
           else{
@@ -618,13 +637,11 @@ class App extends Component{
           <span id="playBoxText">
           </span>
           <span>
-            <span style={{marginTop:"10px"}}>{(this.token==null?"":this.token.label) + " Amount "}</span>
             <input id ="playAmount" type="number"min="0"step="0.001"pattern="^\d*\.?\d{0,18}$"/>
-            <br/>
             <Button id="approve" zIndex="-1"as="input"type ="Button"value={"🤝 Approve 🤝"}onClick={()=>this.approveToken()}
-            style={{backgroundColor:"purple",color:"yellow",fontWeight:"Bold",marginRight:"20px",marginTop:"10px"}}/>
+            style={{backgroundColor:"purple",color:"yellow",fontWeight:"Bold",marginRight:"20px"}}/>
             <Button id="add" zIndex="-1"as="input"type ="Button"value={"+ Add +"}onClick={()=>this.sendPlay(this.team)}
-            style={{backgroundColor:"purple",color:"yellow",fontWeight:"Bold",marginTop:"10px"}}/>
+            style={{backgroundColor:"purple",color:"yellow",fontWeight:"Bold"}}/>
           </span>
         </div>
         <div id="withdrawBox" style={{position:"absolute",top:"25%",left:"25%",
