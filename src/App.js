@@ -539,7 +539,7 @@ class App extends Component{
   }
   componentDidMount(){
     //center widget update
-    setTimeout(() => {  this.handleResize() }, 100);
+    setTimeout(() => {  this.handleResize() }, 200);
     window.addEventListener("resize",()=>{ if(document.getElementById("bgImg").clientHeight>this.height+9||document.getElementById("bgImg").clientHeight<this.height+9||
     document.getElementById("bgImg").clientWidth>this.width+9||document.getElementById("bgImg").clientWidth<this.width+9) {this.handleResize();} });
     this.intervalID=setInterval(this.autoUpdate, 5000);
