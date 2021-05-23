@@ -501,7 +501,7 @@ class App extends Component{
         if(round!="0"){
           while(stake!=null&&stake.amount.toString()!="0"&&round!="0"){
             loser = (await this.contract.losers(token,round)).toString();
-            if(loser!=stake.team.toString()){
+            if(loser!=stake.team.toString()&&round!=this.room.currentRound.toString()){
               let totalPot = BigNumber("0");
               let winnerStake = BigNumber("0");
               for(let i=1;i<5;i++){
