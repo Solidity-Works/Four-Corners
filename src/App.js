@@ -278,36 +278,38 @@ class App extends Component{
         document.getElementById("blue").value="Join Blue Team? \n "+"Total - "+redBlueGoldGreen[1].toString();
         document.getElementById("gold").value="Join Gold Team? \n "+"Total - "+redBlueGoldGreen[2].toString();
         document.getElementById("green").value="Join Green Team? \n "+"Total - "+redBlueGoldGreen[3].toString();
-        redBlueGoldGreen = await this.contract.stakeHeads(this.address,token); //if user is in current round
-        if(redBlueGoldGreen==this.room.currentRound){
-          redBlueGoldGreen = await this.contract.userStake(this.address,token,this.room.currentRound.toString());
-          switch(redBlueGoldGreen.team){
+        let t = await this.contract.stakeHeads(this.address,token); //if user is in current round
+        if(t==this.room.currentRound){
+          t = await this.contract.userStake(this.address,token,this.room.currentRound.toString());
+          let tt = t.team.toString();
+          switch(tt){
             //dividing 0/0 = NaN
-            case 1:
-              document.getElementById("red").value="Red Team \n Total - "+redBlueGoldGreen[0].toString()+"\nMy Stake = "+
-              ethers.utils.formatUnits(redBlueGoldGreen.amount.toString(),this.token.value[1]).substr(0,5)+"\n" +
-              (Math.round(redBlueGoldGreen.amount.toNumber()/this.totalPot.toNumber()*10000)/10000).toString()+"%"+
-              "\n + Add Stake?";
+            case "1":
+              tt="Red";
               break;
-            case 2:
-              document.getElementById("blue").value="Blue Team \n Total - "+redBlueGoldGreen[1].toString()+"\nMy Stake = "+
-              ethers.utils.formatUnits(redBlueGoldGreen.amount.toString(),this.token.value[1]).substr(0,5)+"\n" +
-              (Math.round(redBlueGoldGreen.amount.toNumber()/this.totalPot.toNumber()*10000)/10000).toString()+"%"+
-              "\n + Add Stake?";
+            case "2":
+              tt="Blue";
               break;
-            case 3:
-              document.getElementById("gold").value="Gold Team \n Total - "+redBlueGoldGreen[2].toString()+"\nMy Stake = "+
-              ethers.utils.formatUnits(redBlueGoldGreen.amount.toString(),this.token.value[1]).substr(0,5)+"\n" +
-              (Math.round(redBlueGoldGreen.amount.toNumber()/this.totalPot.toNumber()*10000)/10000).toString()+"%"+
-              "\n + Add Stake?";
+            case "3":
+              tt="Gold";
               break;
-            case 4:
-              document.getElementById("green").value="Green Team \n Total - "+redBlueGoldGreen[3].toString()+"\nMy Stake = "+
-              ethers.utils.formatUnits(redBlueGoldGreen.amount.toString(),this.token.value[1]).substr(0,5)+"\n" +
-              (Math.round(redBlueGoldGreen.amount.toNumber()/this.totalPot.toNumber()*10000)/10000).toString()+"%"+
-              "\n + Add Stake?";
+            case "4":
+              tt="Green";
               break;
           }
+          /*tt="My Team ["+tt+"]\n Total - "+redBlueGoldGreen[0].toString()+"\nMy Stake = "+
+          ethers.utils.formatUnits(t.amount.toString(),this.token.value[1]).substr(0,5)+"\n" +
+          (Math.round(t.amount.toNumber()/this.totalPot.toNumber()*10000)/10000).toString().substr(0,4)+"%"+
+          "\n + Add Stake?";*/
+          const ttt=t;
+          t=tt.toLowerCase();
+          tt=">My Team "+tt+"<\n Total - "+redBlueGoldGreen[0].toString()+
+          "\nMy Stake = "+ethers.utils.formatUnits(ttt.amount.toString(),this.token.value[1]).substr(0,5)+
+          "\nMy Stake = "+(Math.round(parseInt(ttt.amount.toString())/this.totalPot.toNumber()*10000)/100).toString()+"%"+
+          "\n Add Stake ?";
+          console.log(tt);
+          console.log(t);
+          document.getElementById(t).value=tt;
         }
       }
     }
@@ -415,7 +417,7 @@ class App extends Component{
           amount=new BigNumber(10).exponentiatedBy(this.token.value[1]).multipliedBy(amount).toString();
           this.team=team.toString();
           await this.contract.play(this.token.value[0],amount,team,{gasPrice: 10000000000, gasLimit: 321000});
-          setTimeout(() => {  this.loadRoom() }, 10000);
+          setTimeout(() => {  this.loadRoom() }, 15000);
           this.closeModals();
 
         }
@@ -610,7 +612,7 @@ class App extends Component{
         <span id="pot" style={{fontWeight:"bold",position:"absolute",color:"brown"}}>
           {this.pot}
         </span>
-        <Button id="loser" zIndex="1"as="input"type ="Button"value={"Reveal \nLoser"}onClick={()=>this.loser()}
+        <Button id="loser" zIndex="1"as="input"type ="Button"value={"Random \nLoser"}onClick={()=>this.loser()}
             style={{color:"yellow",backgroundColor:"#9049d6",position:"absolute",top:"10%",right:"50%",borderColor:"yellow",
             fontWeight:"Bold"}}/>
         <Button id="withdraw" as="input"type ="Button"value={"Withdraw \nWinnings"}onClick={()=>this.withdraw()}
