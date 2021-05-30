@@ -11,7 +11,7 @@ import Select from 'react-select';
 import BigNumber from 'bignumber.js';
 import {ethers,providers} from 'ethers';
 
-import Logo from './FourCornersLogoV3.png';
+import Logo from './LogoV4.png';
 import Background from './FourCornersStandoffV2.png';
 //import Logo from './FourCornersLogo.png'; //sniper crosshair logo
 //import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -560,7 +560,7 @@ class App extends Component{
   }
   componentDidMount(){
     //center widget update
-    setTimeout(() => {  this.handleResize() }, 200);
+    setTimeout(() => {  this.handleResize() }, 370);
     window.addEventListener("resize",()=>{ if(document.getElementById("bgImg").clientHeight>this.height+9||document.getElementById("bgImg").clientHeight<this.height+9||
     document.getElementById("bgImg").clientWidth>this.width+9||document.getElementById("bgImg").clientWidth<this.width+9) {this.handleResize();} });
     this.intervalID=setInterval(this.autoUpdate, 5000);
@@ -578,18 +578,18 @@ class App extends Component{
     document.title="Four Corners";
     return(
       <div id="bigbox"style={{height:"100vh",textAlign: 'center',justify:"center",justifyContent:"center",alignItems: 'center',backgroundColor:"#40206e"}}>{/*all elements must be contained in 1 div*/}
-        <Navbar id="nav" style={{backgroundColor:"#40206e",top:"0",height:"50px",whiteSpace:"nowrap",width:"50px",marginRight:"0px"}}>
+        <Navbar id="nav"  style={{backgroundColor:"#40206e",top:"0",height:"50px",whiteSpace:"nowrap",width:"50px",marginRight:"0px"}}>
           {/*<Navbar.Brand href="./">*/}
-          <Navbar.Brand>
+          <Navbar.Brand style={{margin:"0px"}}>
             <div id="logo" style={{top:"55"}}>
-              <img src = {Logo} alt="Logo" style={{width:"40px", height:"40px",marginRight:"10px"}}/>
+              <img src = {Logo} alt="Logo" style={{width:"100px", height:"44px"}}/>
             </div>
           </Navbar.Brand>
-          <Navbar.Collapse style={{justifyContent:"left"}}>
-            <DropdownButton id="dropdown-basic-button" title={this.getAddress(this.address)} style={{position:"absolute",left:"60px",width:"auto",maxWidth:"10%",fontWeight:"bold",cursor:"pointer",color:"#3471eb"}}>
+          <Navbar.Collapse>
+            <DropdownButton id="dropdown-basic-button" title={this.getAddress(this.address)} style={{width:"auto",fontWeight:"bold",cursor:"pointer",color:"#3471eb",margin:"5px"}}>
               <Dropdown.Item onSelect={this.connect} id="browserConnect" as="button" style={{color:"blue"}}>Browser Wallet</Dropdown.Item>
             </DropdownButton>
-            <select id="select" onChange={()=>this.changeToken()} style={{position:"absolute",left:"200px",fontSize:"20px",width:"100px",height:"33px"}}>
+            <select id="select" onChange={()=>this.changeToken()} style={{fontSize:"20px",width:"auto",height:"33px"}}>
               <option value="" disabled selected hidden>Token</option>
             </select>
           </Navbar.Collapse>
