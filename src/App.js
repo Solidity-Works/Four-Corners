@@ -262,8 +262,10 @@ class App extends Component{
         }
         //red  = 1, blue = 2, gold = 3, green = 4
         let redBlueGoldGreen = [0,0,0,0];
-        for(let i = this.room.currentRound-1;i>0&&i>this.currentRound-101;i--){
-          const loser = (await this.contract.losers(token,this.room.currentRound)).toString();
+        console.log(this.room.currentRound);
+        console.log(typeof(this.room.currentRound));
+        for(let i = 1;i<101&&this.room.currentRound-i>0;i++){
+          const loser = (await this.contract.losers(token,(this.room.currentRound-i).toString())).toString();
           for(let j = 1;j<5;j++){
             if(parseInt(loser)!=j){
               redBlueGoldGreen[j-1]+=1;
@@ -307,8 +309,6 @@ class App extends Component{
           "\nMy Stake = "+ethers.utils.formatUnits(ttt.amount.toString(),this.token.value[1]).substr(0,5)+
           "\nMy Stake = "+(Math.round(parseInt(ttt.amount.toString())/this.totalPot.toNumber()*10000)/100).toString()+"%"+
           "\n Add Stake ?";
-          console.log(tt);
-          console.log(t);
           document.getElementById(t).value=tt;
         }
       }
