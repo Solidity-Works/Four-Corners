@@ -262,8 +262,6 @@ class App extends Component{
         }
         //red  = 1, blue = 2, gold = 3, green = 4
         let redBlueGoldGreen = [0,0,0,0];
-        console.log(this.room.currentRound);
-        console.log(typeof(this.room.currentRound));
         for(let i = 1;i<101&&this.room.currentRound-i>0;i++){
           const loser = (await this.contract.losers(token,(this.room.currentRound-i).toString())).toString();
           for(let j = 1;j<5;j++){
