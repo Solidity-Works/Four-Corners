@@ -283,9 +283,11 @@ class App extends Component{
         teamStake = await this.contract.pots(token,(this.room.currentRound).toString(),"4");
         document.getElementById("green").value="Join Green Team? \n "+"Total - "+ ethers.utils.formatUnits(teamStake.toString(),this.token.value[1]).substr(0,5);
         let t = await this.contract.stakeHeads(this.address,token); //if user is in current round
+        let x;
         if(t==this.room.currentRound){
           t = await this.contract.userStake(this.address,token,this.room.currentRound.toString());
           let tt = t.team.toString();
+          x=tt;
           switch(tt){
             //dividing 0/0 = NaN
             case "1":
@@ -307,7 +309,8 @@ class App extends Component{
           "\n + Add Stake?";*/
           const ttt=t;
           t=tt.toLowerCase();
-          tt=">My Team "+tt+"<\n Total - "+redBlueGoldGreen[0].toString()+
+          teamStake = await this.contract.pots(token,(this.room.currentRound).toString(),x);
+          tt=">My Team "+tt+"<\n Total - "+ethers.utils.formatUnits(teamStake.toString(),this.token.value[1]).substr(0,5)+
           "\nMy Stake = "+ethers.utils.formatUnits(ttt.amount.toString(),this.token.value[1]).substr(0,5)+
           "\nMy Stake = "+(Math.round(parseInt(ttt.amount.toString())/this.totalPot.toNumber()*10000)/100).toString()+"%"+
           "\n Add Stake ?";
