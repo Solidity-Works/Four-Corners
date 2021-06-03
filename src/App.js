@@ -274,10 +274,14 @@ class App extends Component{
         this.blueWins=redBlueGoldGreen[1].toString()+"/100";
         this.goldWins=redBlueGoldGreen[2].toString()+"/100";
         this.greenWins=redBlueGoldGreen[3].toString()+"/100";
-        document.getElementById("red").value="Join Red Team? \n "+"Total - "+redBlueGoldGreen[0].toString();
-        document.getElementById("blue").value="Join Blue Team? \n "+"Total - "+redBlueGoldGreen[1].toString();
-        document.getElementById("gold").value="Join Gold Team? \n "+"Total - "+redBlueGoldGreen[2].toString();
-        document.getElementById("green").value="Join Green Team? \n "+"Total - "+redBlueGoldGreen[3].toString();
+        let teamStake = await this.contract.pots(token,(this.room.currentRound).toString(),"1");
+        document.getElementById("red").value="Join Red Team? \n "+"Total - "+teamStake.toString();
+        teamStake = await this.contract.pots(token,(this.room.currentRound).toString(),"2");
+        document.getElementById("blue").value="Join Blue Team? \n "+"Total - "+teamStake.toString();
+        teamStake = await this.contract.pots(token,(this.room.currentRound).toString(),"3");
+        document.getElementById("gold").value="Join Gold Team? \n "+"Total - "+teamStake.toString();
+        teamStake = await this.contract.pots(token,(this.room.currentRound).toString(),"4");
+        document.getElementById("green").value="Join Green Team? \n "+"Total - "+teamStake.toString();
         let t = await this.contract.stakeHeads(this.address,token); //if user is in current round
         if(t==this.room.currentRound){
           t = await this.contract.userStake(this.address,token,this.room.currentRound.toString());
